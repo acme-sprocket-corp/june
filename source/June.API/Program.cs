@@ -1,6 +1,4 @@
 
-using Microsoft.OpenApi;
-
 namespace June.API
 {
     public class Program
@@ -9,23 +7,16 @@ namespace June.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
-
-            builder.Services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
             app.MapOpenApi();
             app.UseSwagger();
-
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("v1/swagger.json", "My API V1");
-            });
+            app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
 
