@@ -1,6 +1,6 @@
 @June.API_HostAddress = http://localhost:5251
 
-GET {{June.API_HostAddress}}/weatherforecast/
+GET {{June.API_HostAddress}}/sprocket/
 Accept: application/json
 
 ###
