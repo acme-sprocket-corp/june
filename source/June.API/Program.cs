@@ -1,5 +1,6 @@
 
 using System.Reflection;
+using June.Infrastructure.Dependencies;
 
 namespace June.API
 {
@@ -18,6 +19,7 @@ namespace June.API
 
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
+            builder.Services.RegisterApplication(builder.Configuration);
             builder.Services.AddSwaggerGen(options =>
             {
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
