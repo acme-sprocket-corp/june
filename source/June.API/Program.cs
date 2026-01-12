@@ -1,6 +1,7 @@
 
 using System.Reflection;
 using June.Infrastructure.Dependencies;
+using Serilog;
 
 namespace June.API
 {
@@ -17,6 +18,11 @@ namespace June.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Debug()
+                .CreateBootstrapLogger();
+
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
             builder.Services.RegisterApplication(builder.Configuration);
@@ -28,6 +34,8 @@ namespace June.API
             });
 
             var app = builder.Build();
+
+            app.UseSerilogRequestLogging();
 
             app.MapOpenApi();
             app.UseSwagger();

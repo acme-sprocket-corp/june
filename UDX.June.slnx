@@ -1,4 +1,6 @@
 <Solution>
   <Project Path="source/June.API/June.API.csproj" Id="51456c54-935b-41f1-96ad-85262ebb380f" />
+  <Project Path="source/June.Application/June.Application.csproj" Id="4bba6cfd-8563-4faa-9d89-94fdcee5bc34" />
+  <Project Path="source/June.Domain/June.Domain.csproj" Id="ebb08dc2-539a-4687-a750-a1c18dfca4d8" />
   <Project Path="source/June.Infrastructure/June.Infrastructure.csproj" Id="90462aae-7600-4280-9387-cca07cd1f13a" />
 </Solution>
