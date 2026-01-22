@@ -1,5 +1,5 @@
+using June.Application.Sprockets;
 using June.Domain.Sprockets;
-using June.Infrastructure.DataAccess.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace June.API.Controllers
@@ -9,35 +9,41 @@ namespace June.API.Controllers
     [Route("sprocket")]
     public class SprocketController : ControllerBase
     {
-        private readonly ApplicationContext _context;
+        private readonly ISprocketRepository _sprocketRepository;
 
-        public SprocketController(ApplicationContext context)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sprocketRepository"></param>
+        public SprocketController(ISprocketRepository sprocketRepository)
         {
-            _context = context;
+            _sprocketRepository = sprocketRepository;
         }
 
         /// <summary>
         /// Gets my sprocket.
         /// </summary>
         /// <returns>A <see cref="IActionResult"/>.</returns>
-        [HttpGet]
+        [HttpGet("", Name = "GetAllSprockets")]
         [ProducesResponseType<IEnumerable<Sprocket>>(StatusCodes.Status200OK)]
-        public IActionResult GetAllSprocket()
+        public async Task<IActionResult> GetAllSprocket(CancellationToken cancellationToken = default)
         {
-            var entities = _context.Sprockets.ToList();
+            var entities = await _sprocketRepository.GetAllSprockets(cancellationToken);
 
             return Ok(entities);
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Adds a sprocket.
+        /// </summary>
+        /// <returns>A <see cref="IActionResult"/>.</returns>
+        [HttpPost("", Name = "AddSprocket")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult AddSprocket()
+        public async Task<IActionResult> AddSprocket(CancellationToken cancellationToken = default)
         {
             var sprocket = new Sprocket();
 
-            _context.Sprockets.Add(sprocket);
-
-            _context.SaveChanges();
+            await _sprocketRepository.AddSprocket(sprocket, cancellationToken);
 
             return Created(new Uri($"{sprocket.Id}", UriKind.Relative), sprocket);
         }
